@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  rock_paper_scissors-php:
+    container_name: rock_paper_scissors-php
+    build:
+      context: .docker/php
+      dockerfile: Dockerfile
+    volumes:
+      - rock_paper_scissors-composer:/home/www-data/.composer/:rw
+      - ./:/var/www/:rw
+    working_dir: /var/www/
+
+volumes:
+  rock_paper_scissors-composer:
+    external:
+      name: rock_paper_scissors-composer

@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+
+require dirname(__DIR__).'/vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
+
+$containerBuilder = new ContainerBuilder();
+$containerBuilder->register('game.service', 'App\Services\GameService\GameService');
+$containerBuilder->register('game:run-game', 'App\Command\GameCommand')
+->addArgument(new Reference('game.service'));
+
+$application = new Application();
+$application->add($containerBuilder->get('game:run-game'));
+$application->run();
